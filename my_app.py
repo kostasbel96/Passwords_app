@@ -21,4 +21,4 @@ class Account(Type):
     def __str__(self):
         return f"Person: {self.person.name} {self.person.surname}\nUsername or Email: {self.username_or_email}\nPassword: {self.password}"   
 
-list_accounts = []
+
