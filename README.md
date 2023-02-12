@@ -1,1 +1,1 @@
-code storage app
+passwords storage app
