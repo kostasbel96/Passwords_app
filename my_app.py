@@ -35,15 +35,14 @@ class MyApp:
         self.frame_passwords = tk.Frame(self.root)
         self.frame_passwords.pack()
         self.canvas = tk.Canvas(self.frame_passwords,width=200,height=570,bg='gray20')
+        self.sbar = ttk.Scrollbar(self.frame_passwords,orient="vertical",command=self.canvas.yview)
+        self.sbar.pack(side="right",fill="y")
         self.update()
         
     #setup scroll bar
     def set_scroll_bar(self):
         try:
             if self.canvas.bbox('all')[3] >= int(self.canvas['height'])-100 and self.start:
-                print("mpike scroll")
-                self.sbar = ttk.Scrollbar(self.frame_passwords,orient="vertical",command=self.canvas.yview)
-                self.sbar.pack(side="right",fill="y")
                 self.canvas.configure(yscrollcommand=self.sbar.set)
                 self.canvas.bind('<Configure>',lambda e: self.canvas.configure(scrollregion=(self.canvas.bbox("all")[0],self.canvas.bbox('all')[1],self.canvas.bbox('all')[2],self.canvas.bbox('all')[3]+20)))
                 self.canvas.bind_all("<MouseWheel>",self.on_mousewheel)
@@ -88,7 +87,6 @@ class MyApp:
     #click on label
     def click(self,event):
         self.labels_no = self.canvas.find_all()
-        print("labels",self.labels_no)
         self.canvas_main.delete('all')
         abs_coord_x = self.canvas.winfo_pointerx() - self.canvas.winfo_rootx()
         abs_coord_y = self.canvas.winfo_pointery() - self.canvas.winfo_rooty()
@@ -99,8 +97,6 @@ class MyApp:
                         text = label['text'].split('\n')
                         self.label_no = i
                         if text[1].strip() == MyApp.accounts[i].username:
-                            print(l)
-                            print("done2")
                             username = text[1]
                             password = MyApp.accounts[i].password
                             type_name = text[0]
@@ -160,9 +156,7 @@ class MyApp:
             
     def pressed_delete(self,l):
         self.delete_from_db('data.db')
-        print("l",l)
         self.oldLen += len(self.labels_no)
-        print("old",self.oldLen)
         self.canvas.delete('all')
         self.update()
         self.canvas_main.delete('all')
@@ -200,7 +194,6 @@ class MyApp:
                 self.canvas.yview_scroll(int(-1*(event.delta/120)), "units")
 
     def add_label(self,type_name,username):
-        print("mpike add label")
         frame = tk.Frame(self.canvas,relief="groove",borderwidth=0)
         label = tk.Label(frame,text=f"{type_name.strip()}\n{username.strip()}",width=150,bg="gray20",fg="white",anchor='w')
         self.labels.append(label)
@@ -296,7 +289,6 @@ class MyApp:
                 self.labels[i].config(text=f"{account.type_name}\n{account.username}")
                 cursor = condb.cursor()
                 cursor.execute("""UPDATE ACCOUNTS SET USERNAME = (?) WHERE TYPE = (?) AND PASSWORD = (?)""",(account.username,account.type_name,account.password,))
-                print("added to db")
                 condb.commit()
         except Exception as e:
             print(e) 
@@ -307,7 +299,6 @@ class MyApp:
                 account = self.update_password(new_password,type_name)
                 cursor = condb.cursor()
                 cursor.execute("""UPDATE ACCOUNTS SET PASSWORD = (?) WHERE TYPE = (?)""",(account.password,account.type_name,))
-                print("added to db")
                 condb.commit()
         except Exception as e:
             print(e)
