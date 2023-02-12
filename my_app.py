@@ -17,7 +17,7 @@ class MyApp:
     accounts = []
     def __init__(self,root):
         self.root = root
-        self.root.geometry("800x600+300+100")
+        self.root.geometry("900x600+300+100")
         self.root.resizable(0,0)
         self.root.config(bg='gray20')
         self.connect_db("data.db")
@@ -34,7 +34,7 @@ class MyApp:
     def passwords(self):
         self.frame_passwords = tk.Frame(self.root)
         self.frame_passwords.pack()
-        self.canvas = tk.Canvas(self.frame_passwords,width=200,height=570,bg='gray20')
+        self.canvas = tk.Canvas(self.frame_passwords,width=300,height=570,bg='gray20')
         self.sbar = ttk.Scrollbar(self.frame_passwords,orient="vertical",command=self.canvas.yview)
         self.sbar.pack(side="right",fill="y")
         self.update()
@@ -57,14 +57,14 @@ class MyApp:
 
     #create labels
     def update(self):
-        btn = tk.Button(self.frame_passwords,text="Δημιουργία νέας σύνδεσης",width=30,command=self.btnpressed)
+        btn = tk.Button(self.frame_passwords,text="Δημιουργία νέας σύνδεσης",width=60,command=self.btnpressed)
         btn.pack(side='bottom')
         self.labels = []
         for i,account in enumerate(MyApp.accounts):
-            label = tk.Label(self.canvas,text=f"{account.type_name}\n{account.username}",width=150,bg="gray20",fg="white",anchor='w')
+            label = tk.Label(self.canvas,text=f"{account.type_name.strip()}\n{account.username.strip()}",width=270,bg="gray20",fg="white",anchor='w')
             self.labels.append(label)
             label.pack()
-            self.canvas.create_window(100,20+i*50,width=150,window=label)
+            self.canvas.create_window(150,20+i*50,width=270,window=label)
         self.hover_click()
         self.set_scroll_bar()
         
@@ -102,7 +102,7 @@ class MyApp:
                             type_name = text[0]
 
                             delete_btn = tk.Button(self.root,text="Αφαίρεση",width=10,command=lambda :self.pressed_delete(l))
-                            self.canvas_main.create_window(400,120,window=delete_btn)
+                            self.canvas_main.create_window(285,80,window=delete_btn)
 
                             label_type_name = tk.Label(self.root,text=type_name,bg="gray20",fg='white')
                             self.canvas_main.create_window(200,120,window=label_type_name)
@@ -114,10 +114,10 @@ class MyApp:
                             self.canvas_main.create_window(200,200,window=label_password)
 
                             show_password_btn = tk.Button(self.root,text="show",width=5,command = lambda : self.show_password(password,label_password,show_password_btn))
-                            self.canvas_main.create_window(350,200,window=show_password_btn)
+                            self.canvas_main.create_window(400,200,window=show_password_btn)
                             
                             edit_btn = tk.Button(self.root,text="Επεξεργασία",width=10,command=lambda : self.edit_account(show_password_btn,label_password,label_username,password,type_name,i))
-                            self.canvas_main.create_window(300,120,window=edit_btn)
+                            self.canvas_main.create_window(200,80,window=edit_btn)
                             
                             break
                         
@@ -195,10 +195,10 @@ class MyApp:
 
     def add_label(self,type_name,username):
         frame = tk.Frame(self.canvas,relief="groove",borderwidth=0)
-        label = tk.Label(frame,text=f"{type_name.strip()}\n{username.strip()}",width=150,bg="gray20",fg="white",anchor='w')
+        label = tk.Label(frame,text=f"{type_name.strip()}\n{username.strip()}",width=270,bg="gray20",fg="white",anchor='w')
         self.labels.append(label)
         label.pack()
-        self.canvas.create_window(100,20+(len(self.labels)-1)*50,width=150,window=frame)
+        self.canvas.create_window(150,20+(len(self.labels)-1)*50,width=270,window=frame)
         self.hover_click()
         self.set_scroll_bar()
         
