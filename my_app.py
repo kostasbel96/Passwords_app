@@ -64,7 +64,7 @@ class MyApp:
             label = tk.Label(self.canvas,text=f"{account.type_name.strip()}\n{account.username.strip()}",width=270,bg="gray20",fg="white",anchor='w')
             self.labels.append(label)
             label.pack()
-            self.canvas.create_window(150,20+i*50,width=270,window=label)
+            self.canvas.create_window(140,20+i*50,width=270,window=label)
         self.hover_click()
         self.set_scroll_bar()
         
@@ -198,7 +198,7 @@ class MyApp:
         label = tk.Label(frame,text=f"{type_name.strip()}\n{username.strip()}",width=270,bg="gray20",fg="white",anchor='w')
         self.labels.append(label)
         label.pack()
-        self.canvas.create_window(150,20+(len(self.labels)-1)*50,width=270,window=frame)
+        self.canvas.create_window(140,20+(len(self.labels)-1)*50,width=270,window=frame)
         self.hover_click()
         self.set_scroll_bar()
         
