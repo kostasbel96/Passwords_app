@@ -110,7 +110,7 @@ class MyApp:
                             label_username = tk.Label(self.root,text=username,bg="gray20",fg='white')
                             self.canvas_main.create_window(200,160,window=label_username)
 
-                            label_password = tk.Label(self.root,text=f"{'*'*len(password)}",bg="gray20",fg='white')
+                            label_password = tk.Label(self.root,text=f"{'•'*len(password)}",bg="gray20",fg='white')
                             self.canvas_main.create_window(200,200,window=label_password)
 
                             show_password_btn = tk.Button(self.root,text="show",width=5,command = lambda : self.show_password(password,label_password,show_password_btn))
@@ -145,11 +145,11 @@ class MyApp:
     def show_password(self,password,label_password,btn):
         try:
 
-            if label_password['text'] == '*'*len(password):
+            if label_password['text'] == '•'*len(password):
                 label_password.config(text=password)
                 btn.config(text="hide")
             else:
-                label_password.config(text=f"{'*'*len(password)}")
+                label_password.config(text=f"{'•'*len(password)}")
                 btn.config(text="show")
         except Exception as e:
             print(e)
